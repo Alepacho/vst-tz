@@ -91,3 +91,7 @@ sw.*
 
 # Python ENV
 env/
+
+# Other
+.hidden/
+hidden/
