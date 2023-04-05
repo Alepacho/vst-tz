@@ -4,7 +4,7 @@ export default defineNuxtConfig({
         head: {
             title: "VST Магазинчик",
             htmlAttrs: {
-                class: "h-full",
+                class: "h-full bg-gray-100",
                 lang: 'ru'
             },
             bodyAttrs: {
