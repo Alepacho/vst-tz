@@ -1,18 +1,38 @@
 <template>
-    <header class="bg-white">
+    <header class="bg-white dark:bg-gray-800">
         <nav class="mx-auto flex max-w-7xl items-center justify-between p-3 lg:px-4" aria-label="Global">
             <!-- LOGO -->
             <div class="flex lg:flex-1">
                 <NuxtLink href="/" class="-m-1.5 p-1.5">
                     <span class="sr-only"> VST </span>
-                    <img class="h-8 w-auto" src="/logo.png" alt="" />
+                    <img class="h-10 w-auto" src="/logo.png" alt="" />
                 </NuxtLink>
             </div>
+            
+            <!-- SEARCH ELEMENT -->
+            <div class="flex justify-center">
+                <div class="xl:w-96">
+                    <div class="relative flex w-full flex-wrap items-stretch">
+                    <input
+                        type="search"
+                        class="relative m-0 block w-[1%] min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none"
+                        placeholder="Search"
+                        aria-label="Search"
+                        aria-describedby="button-addon2" />
+                    <span
+                        class="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
+                        id="basic-addon2">
+                        <MagnifyingGlassIcon class="h-5 w-5 flex-none" aria-hidden="true" />
+                    </span>
+                    </div>
+                </div>
+            </div>
+
             <!-- MENU OPEN BUTTON (MOBILE) -->
             <div class="flex lg:hidden">
                 <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
-                <span class="sr-only">Open main menu</span>
-                <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+                    <span class="sr-only"> Open main menu </span>
+                    <Bars3Icon class="h-6 w-6" aria-hidden="true" />
                 </button>
             </div>
             <!--  -->
@@ -54,13 +74,16 @@
                 <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
             </PopoverGroup> -->
 
-            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                <div class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
+            
+
+            <!-- ADD ITEM BUTTON -->
+            <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                <button class="rounded-md bg-sky-500 hover:bg-sky-700 flex items-center justify-center gap-x-2.5 p-2 text-sm font-semibold leading-6 text-gray-100">
                     Добавить товар
                     <span> <PlusIcon class="h-5 w-5 flex-none" aria-hidden="true" /> </span>
-                    <!-- <span aria-hidden="true">&rarr;</span> -->
-                </div>
-            </div>
+                </button>
+            </div> -->
+            <!-- <span aria-hidden="true">&rarr;</span> -->
         </nav>
     </header>
 </template>
@@ -87,7 +110,8 @@ import {
   FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
-  PlusIcon
+  PlusIcon,
+  MagnifyingGlassIcon
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
 
