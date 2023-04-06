@@ -1,13 +1,13 @@
+export type IDetail = {
+    title: string,
+    description: string
+}
 
-
-export type ICard = {
-    id: number,
+export type IProduct = {
+    id?: number,
     name: string,
     image: string,
     price: number,
-    details: {
-        title: string,
-        description: string
-    }[],
+    details: IDetail[],
     description: string
 }

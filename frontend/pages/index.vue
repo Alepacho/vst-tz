@@ -8,9 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import { ICard } from '~/types';
+import { IProduct } from '~/types';
 
-const products: ICard[] = [
+const products: IProduct[] = [
     {
         id: 1,
         name: "Test Name",

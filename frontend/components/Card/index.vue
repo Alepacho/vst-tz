@@ -21,10 +21,10 @@
 </template>
 
 <script setup lang="ts">
-import { ICard } from 'types/index.js';
+import { IProduct } from 'types/index.js';
 
 const props = defineProps<{
-  item: ICard
+  item: IProduct
 }>();
 
 const emit = defineEmits(['change', 'delete']);
