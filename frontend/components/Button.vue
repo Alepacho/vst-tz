@@ -13,7 +13,7 @@
 import { HTMLAttributes } from 'vue';
 
 const props = defineProps<{
-    class?: HTMLAttributes,
+    class?: HTMLAttributes | string,
     onClick: () => void
 }>();
 </script>

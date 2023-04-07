@@ -1,5 +1,6 @@
 <template>
     <!-- ! я бы в ~/pages/admin/ папку положил этот компонент, но для этого надо с конфинами разбираться -->
+    <!-- а мне лень -->
     <form class="max-w-md m-auto">
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
