@@ -1,4 +1,5 @@
 <template>
+    <!-- ! я бы в ~/pages/admin/ папку положил этот компонент, но для этого надо с конфинами разбираться -->
     <form class="max-w-md m-auto">
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
@@ -150,7 +151,7 @@ const props = defineProps<{
 
 <script lang="ts">
 const store = useStore()
-const { getProductList, productList } = storeToRefs(store)
+const { productList } = storeToRefs(store)
 
 export default {
     data() {
@@ -200,7 +201,7 @@ export default {
             console.log("Submit!", event);
             event.preventDefault();
 
-            console.log(getProductList)
+            // console.log(getProductList)
             console.log(productList)
             console.log(store.productList)
             

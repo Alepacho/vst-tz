@@ -14,7 +14,7 @@
                 <div class="xl:w-96">
                     <div class="relative flex w-full flex-wrap items-stretch">
                     <input
-                        type="search"
+                        type="search" v-on:input="(event) => handleSearch(event)"
                         class="relative m-0 block w-[1%] min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none"
                         placeholder="Search"
                         aria-label="Search"
@@ -88,7 +88,7 @@
     </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import {
   Dialog,
@@ -114,6 +114,19 @@ import {
   MagnifyingGlassIcon
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
+import { useStore } from '~/store/';
+import { storeToRefs } from 'pinia';
 
 const mobileMenuOpen = ref(false)
+const store = useStore();
+
+const handleSearch = (event: any) => {
+    console.log("search", event)
+    store.setSearchInput(String(event.target.value))
+}
+</script>
+
+<script lang="ts">
+
+
 </script>

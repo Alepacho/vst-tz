@@ -4,9 +4,13 @@ import { IProduct } from '~/types';
 
 export const useStore = defineStore("product-store", {
     state: () => ({
-        productList: [] as IProduct[]
+        productList: [] as IProduct[],
+        searchInput: ""
     }),
     actions: {
+        setSearchInput(value: string) {
+            this.searchInput = value
+        },
         // можно попроще сделать конечно (через axios)
         async fetchProductList () {
             const config = useRuntimeConfig()
@@ -77,14 +81,15 @@ export const useStore = defineStore("product-store", {
             console.log("getProductByID:", config.apiUrl)
             const { data } = await useFetch(`${config.apiUrl}products/${index}`, {
                 method: 'GET',
-                onResponse: ({ response }) => {
-                    return response._data
-                }
             })
             return data.value
         }
     },
     getters: {
-        getProductList: state => state.productList
+        getFilteredProductList (state) {
+            console.log("search input", state.searchInput)
+            // ! Можно дополнить ценником, описанием и тд.
+            return state.productList.filter((p) => p.name.toLowerCase().includes(state.searchInput.toLowerCase()))
+        }
     }
 });

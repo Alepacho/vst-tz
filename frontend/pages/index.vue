@@ -1,6 +1,7 @@
 <template>
     <div v-if="productList.length > 0" class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        <div v-for="(product, index) of productList" :key="index" class="group relative">
+        <!-- {{ getFilteredProductList }} -->
+        <div v-for="(product, index) of getFilteredProductList" :key="index" class="group relative">
             <Card 
                 :item="product"
                 :on-click-details="() => handleClickDetails(product.id)"
@@ -16,21 +17,23 @@
 
 <script setup lang="ts">
 import { IProduct } from '~/types';
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, onUnmounted, onUpdated, ref, onActivated } from 'vue';
 import { useStore } from '~/store/';
 import { storeToRefs } from 'pinia';
 let init = false;
 
 const router = useRouter();
 const store = useStore();
-const { productList } = storeToRefs(store)
+const { productList, getFilteredProductList } = storeToRefs(store)
+let interval: any;
 
 onMounted(() => {
     console.log("mount")
     
-
     let loaded = false;
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
+        // тут надо добавить проверну на то если вернулись на эту страницу
+        // чтобы обновились данные
         if (productList.value.length > 0) loaded = true;
 
         if (loaded == true) {
@@ -42,12 +45,18 @@ onMounted(() => {
     }, 2000)
 })
 
+onUnmounted(() => clearInterval(interval))
+
 onUpdated(() => {
     console.log("update")
     if (!init) {
         init = true
         console.log("init")
     }
+})
+
+onActivated(() => {
+    console.log("active")
 })
 
 const handleClickDetails = (index: number | undefined) => {

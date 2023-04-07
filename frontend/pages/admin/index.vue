@@ -56,7 +56,7 @@ import { IProduct } from '~/types';
 
 <script lang="ts">
 const store = useStore()
-const { getProductList, productList } = storeToRefs(store)
+const { productList } = storeToRefs(store)
 
 export default {
     data() {

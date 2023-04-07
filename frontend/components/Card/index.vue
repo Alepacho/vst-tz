@@ -3,9 +3,7 @@
     <div class="block m-auto border rounded-md p-2 max-w-sm">
         <!-- IMAGE -->
         <div class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-100 lg:aspect-none lg:h-80">
-            <div v-if="item != undefined">
-                <img :src="item.image" draggable="false" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
-            </div>
+            <img v-if="item != undefined" :src="item.image" draggable="false" class="h-full w-full object-cover object-center lg:h-full lg:w-full" />
             <div v-else class="animate-pulse h-full w-full bg-gray-200">
             </div>
         </div>
