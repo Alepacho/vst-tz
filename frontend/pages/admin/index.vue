@@ -33,7 +33,7 @@
             </Dialog>
         </TransitionRoot>
         <br>
-        <h1 class="font-bold text-xl"> Список товаров </h1>
+        <!-- <h1 class="font-bold text-xl"> Список товаров </h1>
         <div>
             <div v-if="productList.length > 0">
                 <div v-for="product in productList" :key="product.id" class="group relative">
@@ -43,7 +43,7 @@
             <div v-else>
                 <h1 class="text-md"> Не найдено товаров </h1>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

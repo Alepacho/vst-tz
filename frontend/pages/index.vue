@@ -13,6 +13,9 @@
             <Card />
         </div>
     </div>
+    <div v-show="productCount > productList.length" class="mt-6 flex justify-center">
+        <Pagination/>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -24,7 +27,7 @@ let init = false;
 
 const router = useRouter();
 const store = useStore();
-const { productList, getFilteredProductList } = storeToRefs(store)
+const { productList, getFilteredProductList, productCount } = storeToRefs(store)
 let interval: any;
 
 onMounted(() => {

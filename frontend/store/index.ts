@@ -4,6 +4,7 @@ import { IProduct } from '~/types';
 
 export const useStore = defineStore("product-store", {
     state: () => ({
+        productCount: 0,
         productList: [] as IProduct[],
         searchInput: ""
     }),
@@ -29,6 +30,7 @@ export const useStore = defineStore("product-store", {
                     // ! лучше обернуть в try catch
                     if (response._data != null) {
                         const d: any = response._data
+                        this.productCount = d.count
                         const list: IProduct[] = d.results
                         // state.productList = d.results
                         console.log({list})
