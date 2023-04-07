@@ -7,14 +7,16 @@
     </div>
     <div class="bg-white rounded p-3">
         <!-- product id: {{ $route.params.id }} -->
-        <div v-if="product != null" class="grid grid-flow-col gap-4">
+        <div v-if="product != null" class="grid grid-rows-3 grid-flow-col gap-4">
             <div class="row-span-1 md:row-span-3">
                 <img class="rounded h-96 w-full object-cover object-center" :src="product.image" draggable="false"/> 
-                <div class="my-3 font-bold text-xl"> Цена: <span class="font-bold"> {{ product.price }} ₽ </span> </div>
-                <Button :on-click="handleBuyProduct" class="w-full text-xl bg-rose-500 disabled:bg-rose-300 hover:bg-rose-600 focus:ring-4 focus:ring-rose-300"> Приобрести </Button>
+                <div class="my-3 font-bold text-xl"> Цена: <span class="font-bold text-2xl"> {{ product.price }} ₽ </span> </div>
+                <Button :on-click="handleBuyProduct" 
+                    class="w-full text-xl bg-rose-500 disabled:bg-rose-300 hover:bg-rose-600 focus:ring-4 focus:ring-rose-300"
+                > Приобрести </Button>
             </div>
             <!-- <div class="col-span-1"> <h1 class="text-xl font-bold tracking-tight text-gray-900"> {{ product.name }} </h1> </div> -->
-            <div class="row-span-1 col-span-1">
+            <div class="row-span-1 col-span-1 md:col-span-6">
                 <div>
                     <h1 class="text-2xl font-bold tracking-tight text-gray-900"> {{ product.name }} </h1>
                 </div>
@@ -27,14 +29,14 @@
                     <!-- KEY -->
                     <div
                         class="w-1/3 inline-flex items-center px-3 text-sm text-gray-900"
-                        :class="index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'"
+                        :class="index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'"
                     >
                     {{ detail.title }}
                 </div>
                     <!-- VALUE -->
                     <div
                         class="w-1/2 text-gray-900 block flex-1 min-w-0 w-full text-sm p-2.5"
-                        :class="index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-300'"
+                        :class="index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'"
                     >
                         {{ detail.description }}
                     </div>
