@@ -3,7 +3,7 @@
         <div v-for="(product, index) of productList" :key="index" class="group relative">
             <Card 
                 :item="product"
-                :on-click-details="() => handleClickDetails(index)"
+                :on-click-details="() => handleClickDetails(product.id)"
             />
         </div>
     </div>
@@ -16,20 +16,47 @@
 
 <script setup lang="ts">
 import { IProduct } from '~/types';
-import { onMounted } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import { useStore } from '~/store/';
 import { storeToRefs } from 'pinia';
+let init = false;
 
-const route = useRoute();
+const router = useRouter();
 const store = useStore();
 const { productList } = storeToRefs(store)
 
-onMounted(async () => {
-  store.fetchProductList();
+onMounted(() => {
+    console.log("mount")
+    
+
+    let loaded = false;
+    const interval = setInterval(() => {
+        if (productList.value.length > 0) loaded = true;
+
+        if (loaded == true) {
+            clearInterval(interval)
+        } else {
+            console.log("fetching product list")
+            store.fetchProductList();
+        }
+    }, 2000)
 })
 
-const handleClickDetails = (index: number) => {
-    console.log("index", index)
+onUpdated(() => {
+    console.log("update")
+    if (!init) {
+        init = true
+        console.log("init")
+    }
+})
+
+const handleClickDetails = (index: number | undefined) => {
+    if (index === undefined) {
+        console.log("Unknown index:", index);
+        return;
+    } else console.log("index", index);
+
+    router.push({ path: `/product/${index}` });
 }
 
 const products: IProduct[] = [
@@ -89,3 +116,10 @@ const products: IProduct[] = [
 ]
 </script>
 
+<!-- <script lang="ts">
+export default {
+    setup(props, { expose }) {
+
+    }
+}
+</script> -->

@@ -67,6 +67,7 @@ export default {
     methods: {
         modalOnClickSubmit(product: IProduct) {
             console.log("ModalNewItem modalOnClickSubmit", product)
+            store.addProductToList(product)
             this.showModal = false
         },
         onClickAddProduct() {
