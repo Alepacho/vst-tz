@@ -7,6 +7,9 @@
             <li>
                 <NuxtLink href="/" class="mr-4 hover:underline md:mr-6 "> На главную </NuxtLink>
             </li>
+            <li>
+                <NuxtLink href="/admin" class="mr-4 hover:underline md:mr-6 "> Добавить продукт </NuxtLink>
+            </li>
             <!-- <li>
                 <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
             </li>

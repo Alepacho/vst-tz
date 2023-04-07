@@ -10,9 +10,13 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="text" name="product_title" id="product_title" autocomplete="product_title"
+                                <input 
+                                    v-model="newItem.name"
+                                    type="text" name="product_title"
+                                    id="product_title" autocomplete="product_title"
                                     class="block flex-1 rounded py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder="Новый Продукт"  />
+                                    placeholder="Новый Продукт"
+                                />
                             </div>
                         </div>
                     </div>
@@ -22,7 +26,10 @@
                         <div class="mt-2">
                             <div
                                 class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                <input type="number" name="product_price" id="product_price" autocomplete="product_price"
+                                <input 
+                                    v-model="newItem.price"
+                                    type="number" name="product_price" 
+                                    id="product_price" autocomplete="product_price"
                                     class="block flex-1 rounded py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder="Новый Продукт"  />
                             </div>
@@ -33,7 +40,9 @@
                         <label for="description" class="block text-sm font-medium leading-6 text-gray-900"> Описание
                         </label>
                         <div class="mt-2">
-                            <textarea id="description" name="description" rows="3"
+                            <textarea 
+                                v-model="newItem.description"
+                                id="description" name="description" rows="3"
                                 class="block w-full rounded text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6"
                                 placeholder="Напишите что-нибудь веселое тут. Все равно это не настоящий онлайн магазин." />
                         </div>
@@ -43,18 +52,30 @@
                         <label for="product-image" class="block text-sm font-medium leading-6 text-gray-900"> Изображение
                         </label>
                         <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                            <div class="text-center">
-                                <PhotoIcon class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                                <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                                    <label for="file-upload"
-                                        class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                                        <span class="p-1"> Загрузите изображение </span>
-                                        <input id="file-upload" name="file-upload" type="file" class="sr-only"  />
-                                    </label>
-                                    <p class="pl-1"> или перенестие его. </p>
-                                </div>
-                                <p class="text-xs leading-5 text-gray-600"> в формате PNG, JPG, GIF до 10MB </p>
+                            <div v-if="newItem.image.length > 0">
+                                <img :src="newItem.image" draggable="false" style="object-fit: fill"/>
                             </div>
+                            <div v-else>
+                                <div class="text-center">
+                                    <PhotoIcon class="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+                                    <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                                        <label for="file-upload"
+                                            class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                                            <span class="p-1"> Загрузите изображение </span>
+                                            <input 
+                                                v-on:change="event => handleFileLoad(event)"
+                                                ref="file"
+                                                id="file-upload" name="file-upload" 
+                                                type="file" class="sr-only"
+                                                accept="image/*"
+                                            />
+                                        </label>
+                                        <p class="pl-1"> или перенестие его. </p>
+                                    </div>
+                                    <p class="text-xs leading-5 text-gray-600"> в формате PNG, JPG, GIF до 10MB </p>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
 
@@ -103,7 +124,7 @@
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="submit" @click="onSubmit"
+            <button type="submit" @click="onClickSubmitCallback"
                 class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Добавить </button>
         </div>
@@ -111,6 +132,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue"
 import {
     PlusIcon,
     TrashIcon
@@ -119,6 +141,11 @@ import { PhotoIcon } from '@heroicons/vue/24/solid'
 import { IProduct, IDetail } from '~/types';
 import { useStore } from '~/store/';
 import { storeToRefs } from 'pinia';
+
+const props = defineProps<{
+  onClickSubmit: (product: IProduct) => void
+}>();
+
 </script>
 
 <script lang="ts">
@@ -142,17 +169,46 @@ export default {
         }
     },
     methods: {
-        onSubmit(event: Event) {
+        async handleFileLoad(event: any) {
+            console.log("selected file", event)
+            const file: any = this.$refs.file
+            console.log({file})
+
+            var reader = new FileReader();
+            reader.onloadend = () => {
+                const r = reader.result
+                if (typeof r === "string") {
+                    this.newItem.image = r
+                } else {
+                    console.log("Invalid File!", r)
+                }
+            }
+            reader.readAsDataURL(file.files[0]);
+
+            // 
+        },
+        productIsValid() {
+            const ni = this.newItem;
+            if (ni.name.length > 0
+            &&  ni.price > 0
+            &&  ni.image.length > 0
+            &&  ni.details.length > 0
+            &&  ni.description.length > 0) return true;
+            return false
+        },
+        onClickSubmitCallback(event: Event) {
             console.log("Submit!", event);
             event.preventDefault();
-            // await $fetch( '/api/v1/companies', {
-            //     method: 'POST',
-            //     body: formData
-            // } );
 
             console.log(getProductList)
             console.log(productList)
             console.log(store.productList)
+            
+            console.log(this.newItem)
+            if (this.productIsValid())
+                this.onClickSubmit(this.newItem);
+            else
+                console.log("Invalid Product!")
         },
         clearNewDetail() {
             this.newDetail = {

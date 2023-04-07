@@ -3,7 +3,7 @@
     <!-- <NuxtWelcome /> -->
     <!-- по хорошему нужно header/footer рендерить только в нужных routes -->
     <Header />
-    <main>
+    <main class="min-h-screen">
       <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
         <NuxtPage />
       </div>
@@ -14,5 +14,13 @@
 
 
 <script setup lang="ts">
-const route = useRoute()
+// import { onMounted } from 'vue';
+// import { useStore } from '~/store/';
+
+// const route = useRoute();
+// const store = useStore();
+
+// onMounted(async () => {
+//   store.fetchProductList();
+// })
 </script>
