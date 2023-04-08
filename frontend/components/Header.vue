@@ -11,7 +11,7 @@
             
             <!-- SEARCH ELEMENT -->
             <div class="flex justify-center">
-                <div class="xl:w-96">
+                <div class="md:w-96">
                     <div class="relative flex w-full flex-wrap items-stretch">
                     <input
                         type="search" v-on:input="(event) => handleSearch(event)"
@@ -29,13 +29,14 @@
             </div>
 
             <!-- MENU OPEN BUTTON (MOBILE) -->
-            <div class="flex lg:hidden">
+            <!-- <div class="flex lg:hidden">
                 <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = true">
                     <span class="sr-only"> Open main menu </span>
                     <Bars3Icon class="h-6 w-6" aria-hidden="true" />
                 </button>
-            </div>
-            <!--  -->
+            </div> -->
+
+
             <!-- <PopoverGroup class="hidden lg:flex lg:gap-x-12">
                 <Popover class="relative">
                     <PopoverButton class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
