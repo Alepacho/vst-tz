@@ -14,10 +14,11 @@
                 </button>
             </li>
 
-            <li v-for="index in count" :key="index">
+            <li v-for="index in Math.round(productCount / 10)+1" :key="index">
                 <button @click="(event) => handleClickPage(event, index)"
-                    class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                    :class="current == index ? 'bg-gray-200' : ''"
+                    class="px-3 py-2 leading-tight  border border-gray-300"
+                    :class="(page+1) == index ? 'text-gray-200 bg-blue-500' : 'text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700'"
+                    :disabled="(page+1) == index"
                 > {{ index }} </button>
             </li>
             <li>
@@ -37,14 +38,43 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useStore } from '~/store/';
 import { storeToRefs } from 'pinia';
 
 const store = useStore();
-const { productList, productCount } = storeToRefs(store)
-const count = ref<number>(Math.floor(productCount.value / 10))
-const current = 1
-const handleClickPrev = () => { console.log("Prev") }
-const handleClickNext = () => { console.log("Next") }
-const handleClickPage = (event: Event, index: number) => { console.log("Index:", index)}
+const { productList, productCount, page } = storeToRefs(store)
+// const count = ref()
+const handleClickPrev = () => {
+    console.log("Prev")
+    if (page.value > 0) {
+        store.setPage(page.value - 1);
+        store.fetchProductList();
+        window.scrollTo(0,0)
+    }
+}
+const handleClickNext = () => {
+    console.log("Next")
+    const c = productCount.value
+    if (page.value < Math.round(c / 10)) {
+        store.setPage(page.value + 1);
+        store.fetchProductList();
+        window.scrollTo(0,0)
+    }
+}
+const handleClickPage = (event: Event, index: number) => {
+    console.log("Index:", index);
+    const i = index - 1;
+    if (i != page.value) {
+        store.setPage(i);
+        store.fetchProductList();
+        window.scrollTo(0,0)
+    }
+}
+
+// TODO: поправить рендеринг нумерации
+onMounted(async () => {
+
+});
+
 </script>

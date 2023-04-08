@@ -4,6 +4,7 @@ import { IProduct } from '~/types';
 
 export const useStore = defineStore("product-store", {
     state: () => ({
+        page: 0,
         productCount: 0,
         productList: [] as IProduct[],
         searchInput: ""
@@ -12,11 +13,12 @@ export const useStore = defineStore("product-store", {
         setSearchInput(value: string) {
             this.searchInput = value
         },
+        setPage(value: number) { this.page = value; },
         // можно попроще сделать конечно (через axios)
         async fetchProductList () {
             const config = useRuntimeConfig()
             console.log("fetchProductList:", config.apiUrl)
-            const { data, pending, error, refresh } = await useFetch(`${config.apiUrl}products/`, {
+            const { data, pending, error, refresh } = await useFetch(`${config.apiUrl}products/?page=${this.page+1}`, {
                 method: 'GET',
                 onResponseError: ({ request, response, options }) => {
                     console.warn("Unable to fetch product list:", response)

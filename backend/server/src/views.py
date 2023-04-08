@@ -34,7 +34,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [permissions.AllowAny]
     
-
     # https://testdriven.io/blog/drf-views-part-3/
     
     # @action(detail=True, methods=['post'])

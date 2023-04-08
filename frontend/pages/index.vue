@@ -32,11 +32,11 @@ let interval: any;
 
 onMounted(() => {
     console.log("mount")
-    
+    // store.setPage(0);
+    store.fetchProductList();
+
     let loaded = false;
     interval = setInterval(() => {
-        // тут надо добавить проверну на то если вернулись на эту страницу
-        // чтобы обновились данные
         if (productList.value.length > 0) loaded = true;
 
         if (loaded == true) {
